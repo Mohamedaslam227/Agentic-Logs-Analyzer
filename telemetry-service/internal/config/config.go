@@ -25,7 +25,7 @@ func Load() *Config {
 	cfg := &Config{
 		ServiceName: getenv("SERVICE_NAME", "telemetry-service"),
 		Environment: getenv("ENVIRONMENT", "development"),
-		ClusterName: getenv("CLUSTER_NAME", "local-cluster"),
+		//ClusterName: getenv("CLUSTER_NAME", "local-cluster"),
 		PollInterval: getDurationEnv("POLL_INTERVAL", 30*time.Second),
 		EventSinkURL: getenv("EVENT_SINK_URL", "http://localhost:8080/events"),
 		EventTimeout: getDurationEnv("EVENT_TIMEOUT", 10*time.Second),
