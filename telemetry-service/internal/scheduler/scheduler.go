@@ -2,35 +2,33 @@ package scheduler
 
 import (
 	"context"
-	"time"
 	"log"
 	"sync"
 	"telemetry-service/internal/config"
-	"telemetry-service/internal/k8s"
 	"telemetry-service/internal/detectors"
-	"telemetry-service/internal/metrics"
 	"telemetry-service/internal/events"
+	"telemetry-service/internal/k8s"
+	"telemetry-service/internal/metrics"
+	"time"
 )
 
 type Scheduler struct {
-	cfg *config.Config
-	client *k8s.Client
+	cfg        *config.Config
+	client     *k8s.Client
 	collectors []metrics.Collector
-	detectors []detectors.Detector
-	ctx context.Context
-	cancel context.CancelFunc
-	wg sync.WaitGroup
-	publisher *events.Publisher
-
+	detectors  []detectors.Detector
+	ctx        context.Context
+	cancel     context.CancelFunc
+	wg         sync.WaitGroup
+	publisher  *events.Publisher
 }
-
 
 func New(cfg *config.Config, client *k8s.Client) *Scheduler {
 	ctx, cancel := context.WithCancel(context.Background())
 	s := &Scheduler{
-		cfg: cfg,
+		cfg:    cfg,
 		client: client,
-		ctx: ctx,
+		ctx:    ctx,
 		cancel: cancel,
 	}
 
@@ -38,7 +36,7 @@ func New(cfg *config.Config, client *k8s.Client) *Scheduler {
 		metrics.NewCPUCollector(client),
 	}
 	s.detectors = []detectors.Detector{
-		detectors.NewCPUSpikeDetector(600),
+		detectors.NewCPUSpikeDetector(s.cfg.CPUThreshold),
 	}
 	s.publisher = events.NewPublisher(cfg)
 	return s
@@ -93,7 +91,7 @@ func (s *Scheduler) executeCycle() {
 	}
 	AggregatedMetrics := metrics.AggregateMetrics(allMetrics)
 	for _, detectors := range s.detectors {
-		signal,ok := detectors.Detect(AggregatedMetrics)
+		signal, ok := detectors.Detect(AggregatedMetrics)
 		if !ok {
 			continue
 		}
@@ -104,11 +102,11 @@ func (s *Scheduler) executeCycle() {
 		}
 
 		log.Printf(
-		"📤 Event published [%s] severity=%s resource=%s",
-		signal.Type,
-		signal.Severity,
-		signal.Resource,
-	)
+			"📤 Event published [%s] severity=%s resource=%s",
+			signal.Type,
+			signal.Severity,
+			signal.Resource,
+		)
 
 	}
 	elapsed := time.Since(start)
