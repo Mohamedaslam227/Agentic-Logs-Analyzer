@@ -13,3 +13,8 @@ env/
 __pycache__/
 *.py[cod]
 *$py.class
+
+
+sample_payload_crash.json
+sample_payload_crash_cpu.json
+run_agent.py
