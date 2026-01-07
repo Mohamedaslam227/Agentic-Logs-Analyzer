@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telemetry-config
+data:
+  SERVICE_NAME: "telemetry-service"
+  ENVIRONMENT: "production"
+  POLL_INTERVAL: "30"
+  EVENT_SINK_URL: "http://agent-service/events"
+  EVENT_TIMEOUT: "180"
+  HTTP_PORT: "8080"
+  CPU_THRESHOLD: "75.0"

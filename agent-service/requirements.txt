@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+requests
+pydantic
+langgraph
+buildgraph
+langchain-community
+ollama
+kubernetes

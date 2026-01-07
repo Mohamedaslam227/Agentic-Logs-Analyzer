@@ -1,0 +1,16 @@
+{
+  "id": "evt-123456789",
+  "type": "cpu_utilization_high",
+  "severity": "critical",
+  "namespace": "payment-service",
+  "resource": "pod/payment-processor-7b89c5f6-xyz",
+  "message": "CPU usage exceeded 90% for over 5 minutes. Current usage: 95%.",
+  "timestamp": "2026-01-05T12:00:00Z",
+  "metadata": {
+    "cluster_id": "prod-useast-1",
+    "node": "worker-node-04",
+    "limit": "2000m",
+    "current_usage": "1950m"
+  },
+  "source": "prometheus-alertmanager"
+}
