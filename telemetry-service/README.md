@@ -2,11 +2,11 @@
 
 > Kubernetes metrics collector and anomaly detection service written in Go.
 
-## 🎯 Overview
+## Overview
 
 The Telemetry Service is a Go-based monitoring system that continuously polls Kubernetes cluster metrics, detects anomalies (such as CPU spikes, OOM events, and crashes), and publishes incident signals to the Agent Service for AI-powered investigation and remediation.
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 graph LR
@@ -17,14 +17,9 @@ graph LR
     E -->|HTTP POST| F[Agent Service]
     F -->|Decision| E
     E --> G[Console Log]
-    
-    style A fill:#326ce5,color:#fff
-    style D fill:#ff9800
-    style E fill:#4caf50
-    style F fill:#3776ab,color:#fff
 ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 telemetry-service/
@@ -58,7 +53,7 @@ telemetry-service/
 └── README.md
 ```
 
-## 🔧 How It Works
+## How It Works
 
 ### 1. Metrics Collection
 
@@ -156,7 +151,7 @@ func (p *Publisher) Publish(signal *IncidentSignal) error {
 }
 ```
 
-## 🚀 Setup
+## Setup
 
 ### Local Development
 
@@ -195,7 +190,7 @@ make build-telemetry
 make deploy-telemetry
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 All configuration is managed via environment variables.
 
@@ -226,7 +221,7 @@ data:
   HTTP_PORT: "8080"
 ```
 
-## 🧪 Testing
+## Testing
 
 ### 1. Test Locally
 
@@ -261,7 +256,7 @@ Expected log output:
 ```
 Cycle started
 Collected 15 metrics
-📤 Event published [cpu_spike] severity=high resource=pod/stress
+ Event published [cpu_spike] severity=high resource=pod/stress
 
 --- Agent Response ---
 Decision: require_human_approval
@@ -275,7 +270,7 @@ Cycle completed in 1.2s
 
 Since the telemetry service automatically publishes to the agent, you can verify the integration by checking if CPU spikes are detected and sent.
 
-## 📊 Metrics Flow
+## Metrics Flow
 
 ```mermaid
 sequenceDiagram
@@ -299,7 +294,7 @@ sequenceDiagram
     P->>P: Print Agent Response
 ```
 
-## 🔍 Detectors
+## Detectors
 
 ### CPU Spike Detector
 
@@ -346,7 +341,7 @@ Pod B: 95 millicores → Severity: critical (1.9× threshold)
    }
    ```
 
-## 🔐 RBAC Requirements
+## RBAC Requirements
 
 The Telemetry Service needs Kubernetes API read permissions:
 
@@ -396,7 +391,7 @@ spec:
       serviceAccountName: telemetry-service-account
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: "Failed to load cluster configs"
 
@@ -435,14 +430,14 @@ ERROR: failed to get pod metrics: the server could not find the requested resour
   ```
 - Verify it's running: `kubectl get deployment metrics-server -n kube-system`
 
-## 📈 Performance Tuning
+## Performance Tuning
 
 ### Reduce Polling Interval (High-Frequency Monitoring)
 
 ```yaml
 POLL_INTERVAL: "10"  # Poll every 10 seconds
 ```
-⚠️ **Warning:** May increase API server load.
+️ **Warning:** May increase API server load.
 
 ### Increase CPU Threshold (Reduce False Positives)
 
@@ -456,7 +451,7 @@ CPU_THRESHOLD: "100.0"  # Only alert if CPU > 100 millicores
 EVENT_TIMEOUT: "300"  # Wait up to 5 minutes for Agent
 ```
 
-## 🚧 Future Enhancements
+## Future Enhancements
 
 - [ ] **Memory Usage Detector**: Alert on high memory consumption
 - [ ] **OOM Killer Detector**: Detect OOMKilled events
@@ -465,7 +460,7 @@ EVENT_TIMEOUT: "300"  # Wait up to 5 minutes for Agent
 - [ ] **Multi-Cluster Support**: Monitor multiple Kubernetes clusters
 - [ ] **Metrics Buffering**: Store historical data for trend analysis
 
-## 📚 Dependencies
+## Dependencies
 
 ```go
 require (
@@ -477,7 +472,7 @@ require (
 )
 ```
 
-## 🧪 Unit Testing
+## Unit Testing
 
 Run tests:
 ```bash
@@ -501,7 +496,7 @@ func TestCPUSpikeDetector(t *testing.T) {
 }
 ```
 
-## 📝 API Reference
+## API Reference
 
 ### Health Check
 

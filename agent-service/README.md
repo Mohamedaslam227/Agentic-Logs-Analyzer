@@ -2,11 +2,11 @@
 
 > AI-powered Kubernetes incident investigation and decision-making service using LangGraph and ReAct pattern.
 
-## 🎯 Overview
+## Overview
 
 The Agent Service is a Python-based FastAPI application that acts as an intelligent SRE assistant. It receives incident signals from the Telemetry Service and uses a **ReAct Agent** (Reasoning + Acting) to investigate issues by interacting with the Kubernetes API before making remediation decisions.
 
-## 🏗️ Architecture
+## Architecture
 
 ### ReAct Agent Flow
 
@@ -18,12 +18,6 @@ graph LR
     D -->|Logs/Events| B
     C -->|No| E[Decision Node]
     E --> F[Return Decision]
-    
-    style A fill:#90EE90
-    style B fill:#FFD700
-    style D fill:#87CEEB
-    style E fill:#FFA500
-    style F fill:#FF6B6B
 ```
 
 ### Components
@@ -38,7 +32,7 @@ graph LR
 | `model.py` | Pydantic data models (State & Signals) |
 | `logger.py` | Logging configuration |
 
-## 🔧 How It Works
+## How It Works
 
 ### 1. Receive Incident
 
@@ -97,7 +91,7 @@ Returns to Telemetry Service:
 }
 ```
 
-## 🚀 Setup
+## Setup
 
 ### Local Development
 
@@ -132,7 +126,7 @@ make build-agent
 make deploy-agent
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 All configuration is managed via environment variables (or ConfigMap in Kubernetes).
 
@@ -159,7 +153,7 @@ data:
   OLLAMA_TIMEOUT: "60"
 ```
 
-## 🧪 Testing
+## Testing
 
 ### 1. Test Locally
 
@@ -208,7 +202,7 @@ INFO:     Agent Decision: require_human_approval
 INFO:     Root Cause: Backend service is unreachable, causing pod to crash
 ```
 
-## 📊 State Management
+## State Management
 
 The agent uses `IncidentState` to track the investigation:
 
@@ -228,7 +222,7 @@ This state is passed through the graph:
 1. **Investigator** adds `messages` (LLM thoughts + tool results)
 2. **Decision** extracts the final `root_cause` and sets `decision`
 
-## 🔐 RBAC Requirements
+## RBAC Requirements
 
 The agent needs Kubernetes API permissions. Apply this before deployment:
 
@@ -275,19 +269,19 @@ spec:
       serviceAccountName: agent-service-account
 ```
 
-## 🧠 Understanding the ReAct Pattern
+## Understanding the ReAct Pattern
 
 ### Traditional Approach (Linear)
 ```
 Alert → LLM Guess → Decision → Done
 ```
-❌ Problem: No verification, purely speculative.
+ Problem: No verification, purely speculative.
 
 ### ReAct Approach (Loop)
 ```
 Alert → Think → Tool → Observe → Think → Decide → Done
 ```
-✅ Benefit: Evidence-based decisions using real cluster data.
+ Benefit: Evidence-based decisions using real cluster data.
 
 ### Code Example
 
@@ -329,7 +323,7 @@ Root Cause: The pod is crashing because it cannot connect to the backend service
 This is a dependency failure, not a problem with the pod itself.
 ```
 
-## 🚧 Future Enhancements
+## Future Enhancements
 
 - [ ] **Human-in-the-Loop**: Integrate with Slack for approval workflows
 - [ ] **Self-Healing Verification**: Check if the fix worked after applying
@@ -337,7 +331,7 @@ This is a dependency failure, not a problem with the pod itself.
 - [ ] **RAG Integration**: Search past incidents from a vector database
 - [ ] **Multi-Agent System**: Specialized agents for different resource types
 
-## 📚 Dependencies
+## Dependencies
 
 ```txt
 fastapi              # Web framework
@@ -351,7 +345,7 @@ langchain-ollama     # Ollama LLM wrapper
 kubernetes           # Kubernetes API client
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: "OllamaLLM object has no attribute 'bind_tools'"
 
@@ -373,9 +367,9 @@ def get_llm():
 
 **Solution:** Check the System Message in `nodes.py`. It must explicitly tell the LLM to analyze tool outputs, not just call them.
 
-## 📝 API Reference
+## API Reference
 
-### `GET /`
+### GET /`
 Health check endpoint.
 
 **Response:**
@@ -385,7 +379,7 @@ Health check endpoint.
 }
 ```
 
-### `POST /events`
+### POST /events`
 Receive and process incident signals.
 
 **Request Body:**

@@ -2,11 +2,11 @@
 
 > An intelligent Kubernetes observability and incident response system powered by AI agents with investigative capabilities.
 
-## 🎯 Overview
+## Overview
 
 This project implements an autonomous SRE system that monitors Kubernetes clusters, detects anomalies, and uses a **ReAct Agent** (Reasoning + Acting) to investigate incidents using real cluster data before making remediation decisions.
 
-## 🏗️ Architecture
+## Architecture
 
 ### High-Level System Flow
 
@@ -23,11 +23,6 @@ graph TB
     OL -->|Tool Calls| AS
     AS -->|K8s API Calls| K8S
     AS -->|Decision| TS
-    
-    style K8S fill:#326ce5,color:#fff
-    style TS fill:#00ADD8,color:#fff
-    style AS fill:#3776ab,color:#fff
-    style OL fill:#ff6f00,color:#fff
 ```
 
 ### Component Breakdown
@@ -40,7 +35,7 @@ graph TB
 
 ---
 
-## 🤖 ReAct Agent Workflow
+## ReAct Agent Workflow
 
 The Agent Service implements a **ReAct (Reasoning + Acting)** loop, allowing the AI to investigate incidents like a human SRE would.
 
@@ -61,12 +56,6 @@ graph TB
     TOOLS -->|Feed Result Back| INVESTIGATOR
     TOOL_DECISION -->|No: Have Answer| DECIDE
     DECIDE --> END_NODE
-    
-    style START fill:#90EE90
-    style INVESTIGATOR fill:#FFD700
-    style TOOLS fill:#87CEEB
-    style DECIDE fill:#FFA500
-    style END_NODE fill:#FF6B6B
 ```
 
 ### Available Tools
@@ -101,7 +90,7 @@ sequenceDiagram
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -156,7 +145,7 @@ uvicorn main:app --reload --port 8080
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### Telemetry Service (Go)
 
@@ -185,7 +174,7 @@ Configured via `agent-service/deployments/configmap.yaml`:
 
 ---
 
-## 📊 Data Flow
+## Data Flow
 
 ### Complete Incident Lifecycle
 
@@ -212,16 +201,11 @@ flowchart TD
     M --> N
     N --> O[Print Decision]
     O --> P[Log to Console]
-    
-    style A fill:#e1f5ff
-    style F fill:#fff3cd
-    style H fill:#d4edda
-    style J fill:#f8d7da
 ```
 
 ---
 
-## 🛠️ Makefile Commands
+## Makefile Commands
 
 ### Build Commands
 
@@ -257,7 +241,7 @@ make logs-agent          # Tail agent service logs
 
 ---
 
-## 🧪 Testing the System
+## Testing the System
 
 ### 1. Send a Test Incident
 
@@ -299,14 +283,14 @@ kubectl logs -f deployment/agent-service
 kubectl logs -f deployment/telemetry-service
 
 # You should see:
-# - "📤 Event published [cpu_spike]"
+# - " Event published [cpu_spike]"
 # - "--- Agent Response ---"
 # - "Decision: ..."
 ```
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
@@ -350,7 +334,7 @@ kubectl logs -f deployment/telemetry-service
 
 ---
 
-## 🔐 RBAC Permissions
+## RBAC Permissions
 
 The Agent Service requires Kubernetes API access to investigate incidents. When deploying to production, apply the RBAC policy:
 
@@ -391,7 +375,7 @@ kubectl apply -f agent-service/deployments/agent-rbac.yaml
 
 ---
 
-## 🧠 How the ReAct Agent Works
+## How the ReAct Agent Works
 
 ### Normal Linear Agent (Old)
 ```
@@ -436,21 +420,21 @@ When an alert arrives, the agent:
 
 ---
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 This project demonstrates:
 
-✅ **LangGraph** for building stateful AI agents  
-✅ **Tool Calling** (Function Calling) with LLMs  
-✅ **ReAct Pattern** (Reasoning + Acting in a loop)  
-✅ **Kubernetes Client Libraries** (Python & Go)  
-✅ **Microservices Architecture** with FastAPI and Go  
-✅ **Local LLM Deployment** with Ollama  
-✅ **ConfigMap-driven Configuration** in Kubernetes  
+ **LangGraph** for building stateful AI agents  
+ **Tool Calling** (Function Calling) with LLMs  
+ **ReAct Pattern** (Reasoning + Acting in a loop)  
+ **Kubernetes Client Libraries** (Python & Go)  
+ **Microservices Architecture** with FastAPI and Go  
+ **Local LLM Deployment** with Ollama  
+ **ConfigMap-driven Configuration** in Kubernetes  
 
 ---
 
-## 🚧 Future Enhancements
+## Future Enhancements
 
 - [ ] **Human-in-the-Loop (HITL)**: Pause workflow for approval via Slack/Teams
 - [ ] **Self-Healing Loop**: Verify if remediation worked, retry if failed
@@ -461,13 +445,13 @@ This project demonstrates:
 
 ---
 
-## 📝 License
+## License
 
 MIT License - Feel free to use this for learning and experimentation.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built with:
 - [LangGraph](https://github.com/langchain-ai/langgraph) - Agent orchestration
@@ -477,4 +461,4 @@ Built with:
 
 ---
 
-**Made with ❤️ by Mohamed Aslam** | [GitHub](https://github.com/Mohamedaslam227/AI-Logs-Analyzer)
+**Made with ️ by Mohamed Aslam** | [GitHub](https://github.com/Mohamedaslam227/AI-Logs-Analyzer)
