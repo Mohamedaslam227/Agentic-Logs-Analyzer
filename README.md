@@ -1,4 +1,4 @@
-# AI DevOps SRE Assistant
+# Agentic-Logs-Analyzer
 
 > An intelligent Kubernetes observability and incident response system powered by AI agents with investigative capabilities.
 
